@@ -11,7 +11,7 @@ export const NavBar = () => {
 		return <EmployeeNav/>
 	}
 	else {
-		//Return customer views
+		//Return user views
 		return <UserNav/>
 	}
 }

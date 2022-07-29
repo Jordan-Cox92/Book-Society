@@ -1,6 +1,8 @@
 import { Outlet, Route, Routes } from "react-router-dom"
 import { WantToRead } from "../books/WantToRead"
 import { CompletedBooks } from "../books/CompletedBooks"
+import { Masterpieces } from "../books/Masterpieces"
+import { BooksYouDespise } from "../books/BooksYouDespise"
 
 
 export const ApplicationViews = () => {
@@ -18,6 +20,8 @@ export const ApplicationViews = () => {
                
                 <Route path="/CompletedBooks" element={ <CompletedBooks /> } />
                 <Route path="/WantToRead" element={ <WantToRead /> } />
+                <Route path="/Masterpieces" element={ <Masterpieces /> } />
+                <Route path="/BooksYouDespise" element={ <BooksYouDespise /> } />
               
             </Route>
         </Routes>

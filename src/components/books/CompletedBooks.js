@@ -9,5 +9,5 @@ export const CompletedBooks = () => {
         },
         [] // When this array is empty, you are observing initial component state
     )
-    return <h2>CompletedBooks</h2>
+    return <h2>Completed Books</h2>
 }
