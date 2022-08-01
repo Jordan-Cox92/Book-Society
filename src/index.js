@@ -7,6 +7,7 @@ import { BookSociety } from './components/BookSociety';
 
 
 
+
 const container = document.getElementById("root");
 const root = createRoot(container)
 root.render(
@@ -16,4 +17,4 @@ root.render(
 );
 
 
-//this module is what kickstarts our app
+//this module is what kickstarts our app and renders BookSociety.js

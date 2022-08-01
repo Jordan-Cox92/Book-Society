@@ -6,10 +6,11 @@ export const WantToRead = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/books`)
+            
+            fetch(`http://localhost:8088/savedBooks`)
             .then(response => response.json())
-            .then((bookArray) => {
-                setBooks(bookArray)
+            .then((savedBookArray) => {
+                setBooks(savedBookArray)
 
             })
 
@@ -20,14 +21,14 @@ export const WantToRead = () => {
     return <>
         <h2>WantToRead</h2>
 
-        <article className="books">
+        <article className="savedBooks">
             {
 
                 books.map(
-                    (book) => {
-                        return <section className="book">
-                            <header>{book.title}</header>
-                            <footer>author: {book.author}</footer>
+                    (savedBook) => {
+                        return <section className="savedBook">
+                            <header>{savedBook.bookId}</header>
+                            <footer>author: {savedBook.bookId}</footer>
                         </section>
                     }
                 )
