@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 export const BookList = ({ searchTermState }) => {
     const [books, setBooks] = useState([])
     const [filteredBooks, setFiltered] = useState([])
-    const [savedBooks, updateSavedBooks] = useState([])
+   
    
     const navigate = useNavigate()
 
@@ -36,31 +36,39 @@ export const BookList = ({ searchTermState }) => {
         [] // When this array is empty, you are observing initial component state
     )
 
-    useEffect(
-        () => {
-            
-        }
-    )
-
-
+  
+    const saveBook = (book) => {
+        fetch(` http://localhost:8088/savedBooks`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({"bookId": book.id, "userId": bookUserObject.id, "author": book.author, "title": book.title})
+        })
+            .then(response => response.json())
+            .then(() => {
+                navigate("/WantToRead")
+            })
+    }
+   
 
 
 
 
     return <>
         {
-            
+             
         }
         <h2>List of Books</h2>
 
-        <article className="savedBooks">
+        <article className="books">
             {
                 filteredBooks.map(
                     (book) => {
                         return <section className="book">
                             <header>{book.title}</header>
                             <footer> {book.author}</footer>
-                            <button onClick={booksSaved}>save</button>
+                            <button onClick={()=> {saveBook(book)}}>save</button>
                         </section>
                     }
                 )
@@ -70,3 +78,5 @@ export const BookList = ({ searchTermState }) => {
 
                        
 }
+
+

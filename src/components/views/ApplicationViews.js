@@ -6,6 +6,7 @@ import { BooksYouDespise } from "../books/BooksYouDespise"
 import { BookSearch } from "../books/BookSearch"
 import { BookContainer } from "../books/BookContainer"
 import { BookList } from "../books/BookList"
+import { SavedBooksList } from "../books/SavedBooksList"
 
 
 export const ApplicationViews = () => {
@@ -18,7 +19,7 @@ export const ApplicationViews = () => {
 
                     <BookContainer/>
 
-                    
+
                    
 
 
@@ -27,10 +28,11 @@ export const ApplicationViews = () => {
             }>
 
 
-                <Route path="/CompletedBooks" element={ <CompletedBooks /> } />
-                <Route path="/WantToRead" element={ <WantToRead /> } />
-                <Route path="/Masterpieces" element={ <Masterpieces /> } />
-                <Route path="/BooksYouDespise" element={ <BooksYouDespise /> } />
+                 {/* <Route path="/CompletedBooks" element={ <CompletedBooks /> } />  */}
+                 {/* <Route path="/SavedBooksList" element={ <SavedBooksList/>} /> */}
+                 { <Route path="/WantToRead" element={ <WantToRead /> } /> }
+                {/* <Route path="/Masterpieces" element={ <Masterpieces /> } />  */}
+                 {/* <Route path="/BooksYouDespise" element={ <BooksYouDespise /> } />  */}
                 <Route path="/books" element={<BookContainer /> } />
                     
                  
