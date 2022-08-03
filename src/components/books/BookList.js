@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 
 export const BookList = ({ searchTermState }) => {
-    const [books, setBooks] = useState([])//
-    const [filteredBooks, setFiltered] = useState([])
-    const [savedBooks, setSavedBooks] = useState([])
+    const [books, setBooks] = useState([])//books as initial state, and setBooks as function to change initial state
+    const [filteredBooks, setFiltered] = useState([])//filteredBooks is init state, and setFiltered is function to change initial state
+    const [savedBooks, setSavedBooks] = useState([])//same
 
 
     const navigate = useNavigate()
@@ -16,7 +16,7 @@ export const BookList = ({ searchTermState }) => {
     useEffect(
         () => {
             const searchedBooks = books.filter(book => {
-                return book.title.toLowerCase().startsWith(searchTermState.toLowerCase())
+                return book.title.toLowerCase().startsWith(searchTermState.toLowerCase())//filtering through the searched books
             })
             setFiltered(searchedBooks)
         },
@@ -24,7 +24,7 @@ export const BookList = ({ searchTermState }) => {
     )
 
 
-
+//function to fetch all the books from the database and set them to the bookArray
     const getAllBooks = () => {
         fetch(' http://localhost:8088/books')
             .then(response => response.json())
@@ -32,12 +32,12 @@ export const BookList = ({ searchTermState }) => {
                 setBooks(bookArray)
             })
     }
-        
+   //observes state.  When state changes, the function is invoked.     
     useEffect(
         () => {getAllBooks()},
         []
     )
-    
+    //function to fetch all my saved books and then set them to the savedBookArray
     const getAllSavedBooks = () => {
         fetch(' http://localhost:8088/savedBooks')
             .then(response => response.json())
@@ -45,13 +45,17 @@ export const BookList = ({ searchTermState }) => {
                 setSavedBooks(savedBookArray)
             })
     }
-        
+   //observes state.  When state changes, the function is invoked.     
     useEffect(
         () => {getAllSavedBooks()},
         []
     )
 
+    
 
+
+
+//function to update the savedbooks if button is clicked on
 const saveBook = (book) => {
     fetch(`http://localhost:8088/savedBooks`, {
         method: "POST", // used to send data to a server to create/update a resource.
@@ -62,7 +66,9 @@ const saveBook = (book) => {
     })
         .then(response => response.json())
         .then(() => {
-            navigate("/")
+            //navigate("/")
+            getAllBooks()
+            window.alert("Your book has been saved!")
         })
 }
 

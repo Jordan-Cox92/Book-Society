@@ -17,7 +17,7 @@ export const ApplicationViews = () => {
                     <h1>Welcome to the Book Society!</h1>
                     <div>A place where you can commune with your books</div>
 
-                    <BookContainer/>
+                    
 
 
                    
