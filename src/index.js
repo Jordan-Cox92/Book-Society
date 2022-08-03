@@ -17,4 +17,4 @@ root.render(
 );
 
 
-//this module is what kickstarts our app and renders BookSociety.js
+//this module is what kickstarts our app and routes to BookSociety.js

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 export const WantToRead = () => {
     const [books, setBooks] = useState([]) //the initial state is an empty array, the current state is books, and setBooks is a function that updates state 
     const [wishBooks, setWishBooks] = useState([])
+    const [filteredBooks, setFilteredBooks] = useState([])
     const localBookUser = localStorage.getItem("book_user")
      const bookUserObject = JSON.parse(localBookUser)
     useEffect(
@@ -21,7 +22,7 @@ export const WantToRead = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/savedBooks`)
+            fetch(`http://localhost:8088/savedBooks?_expand=book`)
                 .then(response => response.json())
                 .then((savedBooksArray) => {               
                     setWishBooks(savedBooksArray)
@@ -32,10 +33,10 @@ export const WantToRead = () => {
 //Get all wishBooks by user, then display books saved by said user.
       useEffect(
           () => {
-          const myBooks = books.filter(book => book.userId === bookUserObject.id)
-          setWishBooks(myBooks)
+          const userBooks = wishBooks.filter(book => book.userId === bookUserObject.id)
+          setFilteredBooks(userBooks)
           },
-          [books]
+          [wishBooks]
       )
 
 
@@ -45,12 +46,13 @@ export const WantToRead = () => {
         <article className="savedBooks">
             {
 
-                wishBooks.map(
-                    (book) => {
-                        return <section className="savedBook">
-                            <header>{book.title}</header>
-                            <footer>author: {book.author}</footer>
+                filteredBooks.map(
+                    (filteredBook) => {
+                   return     filteredBook.userId === bookUserObject.id ?  <section className="savedBook">
+                            <header>{filteredBook?.book?.title}</header>
+                             <footer> {filteredBook?.book?.author}</footer> 
                         </section>
+                        : ""
                     }
                 )
             }
