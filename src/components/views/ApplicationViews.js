@@ -7,20 +7,21 @@ import { BookSearch } from "../books/BookSearch"
 import { BookContainer } from "../books/BookContainer"
 import { BookList } from "../books/BookList"
 import { SavedBooksList } from "../books/SavedBooksList"
+import { CommentForm } from "../books/CommentedBooks"
 
 
 export const ApplicationViews = () => {
-	return (
+    return (
         <Routes>
             <Route path="/" element={
                 <>
                     <h1>Welcome to the Book Society!</h1>
                     <div>A place where you can commune with your books</div>
 
-                    
 
 
-                   
+
+
 
 
                     <Outlet />
@@ -28,15 +29,16 @@ export const ApplicationViews = () => {
             }>
 
 
-                 {/* <Route path="/CompletedBooks" element={ <CompletedBooks /> } />  */}
-                 {/* <Route path="/SavedBooksList" element={ <SavedBooksList/>} /> */}
-                 { <Route path="/WantToRead" element={ <WantToRead /> } /> }
+                {/* <Route path="/CompletedBooks" element={ <CompletedBooks /> } />  */}
+                {/* <Route path="/SavedBooksList" element={ <SavedBooksList/>} /> */}
+                <Route path="/WantToRead" element={<WantToRead />} />
+                <Route path="/:bookId" element={<CommentForm />} />
                 {/* <Route path="/Masterpieces" element={ <Masterpieces /> } />  */}
-                 {/* <Route path="/BooksYouDespise" element={ <BooksYouDespise /> } />  */}
-                <Route path="/books" element={<BookContainer /> } />
-                    
-                 
-              
+                {/* <Route path="/BooksYouDespise" element={ <BooksYouDespise /> } />  */}
+                <Route path="/books" element={<BookContainer />} />
+
+
+
             </Route>
         </Routes>
     )

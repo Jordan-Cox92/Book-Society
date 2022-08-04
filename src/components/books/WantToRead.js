@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 
 
 
 
 export const WantToRead = () => {
-    const [books, setBooks] = useState([]) 
+    const navigate = useNavigate()
     const [wishBooks, setWishBooks] = useState([])
     const [filteredBooks, setFilteredBooks] = useState([])
+    const [comments, setComments] = useState([])
     const localBookUser = localStorage.getItem("book_user")
     const bookUserObject = JSON.parse(localBookUser)
-    const [savedBooks, setSavedBooks] = useState([])
-    // useEffect(
-    //     () => {
+    
 
-    //         fetch(`http://localhost:8088/books`)
-    //             .then(response => response.json())
-    //             .then((bookArray) => {
-    //                 setBooks(bookArray)
 
-    //             })
-    //     },
-    //     [] // When this array is empty, you are observing initial component state
-    // )
-//observes state.  When state changes, 
+    //listens for when the state changes and does something
     useEffect(
         () => {
             getAllSavedBooks()
@@ -37,16 +30,16 @@ export const WantToRead = () => {
         },
         [wishBooks]
     )
-//function to get all saved books via fetch and then set those saved books in an array
+    //function to get all saved books via fetch and then set those saved books in an array
     const getAllSavedBooks = () => {
         fetch(`http://localhost:8088/savedBooks?_expand=book`)
-        .then(response => response.json())
-        .then((savedBooksArray) => {
-            setWishBooks(savedBooksArray)
-        })
+            .then(response => response.json())
+            .then((savedBooksArray) => {
+                setWishBooks(savedBooksArray)
+            })
     }
 
-//function to delete a particular book in my savedBooks array
+    //function to delete a particular book in my savedBooks array
     const deleteSavedBooks = (savedBook) => {
         fetch(`http://localhost:8088/savedBooks/${savedBook.id}`, {
             method: "DELETE"
@@ -55,13 +48,28 @@ export const WantToRead = () => {
                 getAllSavedBooks()
             })
 
-
     }
 
+    const getAllComments = () => {
+        fetch(`http://localhost:8088/comments`)
+            .then(response => response.json())
+            .then((commentsArray) => {
+                setComments(commentsArray)
+            })
+    }
 
+    useEffect(
+        () => {
+            getAllComments()
+        }
+    )
 
-
-
+    const displayComments = (filteredBook) => {
+       
+        return <>{comments.filter((comment)=> 
+            {return comment.userId == filteredBook.userId && comment.savedBookId == filteredBook.bookId })
+            .map((comment)=>{return<li key={comment.id}>{comment.content}</li>})}</>
+    }
 
     return <>
         <h2>Want To Read</h2>
@@ -71,12 +79,14 @@ export const WantToRead = () => {
 
                 filteredBooks.map(
                     (filteredBook) => {
-                        return filteredBook.userId === bookUserObject.id ? <section className="savedBook">
-                            <header>{filteredBook?.book?.title}</header>
-                            <footer> {filteredBook?.book?.author}</footer>
-                            <button onClick={() => deleteSavedBooks(filteredBook)}>Delete</button>
-
-                        </section>
+                        return filteredBook.userId === bookUserObject.id
+                            ? <section key={filteredBook.id} className="savedBook">
+                                <header>{filteredBook?.book?.title}</header>
+                                <footer> {filteredBook?.book?.author}</footer>
+                                <button onClick={() => navigate(`/${filteredBook.bookId}`)}>Add Comment</button>
+                                <button onClick={() => deleteSavedBooks(filteredBook)}>Delete</button>
+                                <footer> <ul>{displayComments(filteredBook)}</ul></footer>
+                            </section>
                             : ""
                     }
                 )

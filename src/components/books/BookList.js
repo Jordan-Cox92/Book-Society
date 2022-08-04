@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 
 export const BookList = ({ searchTermState }) => {
-    const [books, setBooks] = useState([])//books as initial state, and setBooks as function to change initial state
-    const [filteredBooks, setFiltered] = useState([])//filteredBooks is init state, and setFiltered is function to change initial state
-    const [savedBooks, setSavedBooks] = useState([])//same
+    const [books, setBooks] = useState([])
+    const [filteredBooks, setFiltered] = useState([])
+    const [savedBooks, setSavedBooks] = useState([])
 
 
     const navigate = useNavigate()
@@ -86,7 +86,7 @@ return <>
         {
             filteredBooks.map(
                 (book) => {
-                    return <section className="book">
+                    return <section key={book.id} className="book">
                         <header>{book.title}</header>
                         <footer> {book.author}</footer>
                         <button onClick={() => { saveBook(book) }}>save</button>
