@@ -61,16 +61,30 @@ export const WantToRead = () => {
     useEffect(
         () => {
             getAllComments()
-        }
+        },
+        []
     )
 
-    const displayComments = (filteredBook) => {
+     const displayComments = (filteredBook) => {
        
-        return <>{comments.filter((comment)=> 
-            {return comment.userId == filteredBook.userId && comment.savedBookId == filteredBook.bookId })
+         return <>{comments.filter((comment)=> 
+             {return comment.userId == filteredBook.userId && comment.savedBookId == filteredBook.bookId })
             .map((comment)=>{return<li key={comment.id}>{comment.content}</li>})}</>
-    }
+     }
 
+     const deleteComments = (id) => {
+         fetch(`http://localhost:8088/comments/${id}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                 getAllComments()
+             })
+
+     }
+      
+
+     
+   
     return <>
         <h2>Want To Read</h2>
 
@@ -84,8 +98,10 @@ export const WantToRead = () => {
                                 <header>{filteredBook?.book?.title}</header>
                                 <footer> {filteredBook?.book?.author}</footer>
                                 <button onClick={() => navigate(`/${filteredBook.bookId}`)}>Add Comment</button>
-                                <button onClick={() => deleteSavedBooks(filteredBook)}>Delete</button>
+                                <button onClick={() => deleteSavedBooks(filteredBook)}>Delete Book</button>
                                 <footer> <ul>{displayComments(filteredBook)}</ul></footer>
+                                <button onClick={() => deleteComments(comments.id)}>Delete Comment</button>
+
                             </section>
                             : ""
                     }
