@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { DropSelector } from "./Dropdown"
+import "./Books.css"
 
 
 export const BookList = ({ searchTermState }) => {
@@ -68,11 +70,57 @@ const saveBook = (book) => {
         .then(() => {
             //navigate("/")
             getAllBooks()
-            window.alert("Your book has been saved!")
+            window.alert("Your book has been added to Want To Read!")
         })
 }
 
+const completedBook = (book) => {
+    fetch(`http://localhost:8088/completedBooks`, {
+        method: "POST", // used to send data to a server to create/update a resource.
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ "bookId": book.id, "userId": bookUserObject.id })//converting object into a string - when sending data to a web server, the data has to be a string
+    })
+        .then(response => response.json())
+        .then(() => {
+            //navigate("/")
+            getAllBooks()
+            window.alert("Your book has been added to Completed Books!")
+        })
+}
 
+const masterpieceBook = (book) => {
+    fetch(`http://localhost:8088/masterpieceBooks`, {
+        method: "POST", // used to send data to a server to create/update a resource.
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ "bookId": book.id, "userId": bookUserObject.id })//converting object into a string - when sending data to a web server, the data has to be a string
+    })
+        .then(response => response.json())
+        .then(() => {
+            //navigate("/")
+            getAllBooks()
+            window.alert("Your book has been added to Masterpieces!")
+        })
+}
+
+const despisedBook = (book) => {
+    fetch(`http://localhost:8088/despisedBooks`, {
+        method: "POST", // used to send data to a server to create/update a resource.
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ "bookId": book.id, "userId": bookUserObject.id })//converting object into a string - when sending data to a web server, the data has to be a string
+    })
+        .then(response => response.json())
+        .then(() => {
+            //navigate("/")
+            getAllBooks()
+            window.alert("Your book has been added to Despised Books!")
+        })
+}
 
 
 
@@ -80,7 +128,7 @@ return <>
     {
 
     }
-    <h2>List of Books</h2>
+    <h3>List of Books</h3>
 
     <article className="books">
         {
@@ -89,7 +137,13 @@ return <>
                     return <section key={book.id} className="book">
                         <header>{book.title}</header>
                         <footer> {book.author}</footer>
-                        <button onClick={() => { saveBook(book) }}>save</button>
+                        <DropSelector
+                            saveBook={saveBook} 
+                            completedBook={completedBook}
+                            masterpieceBook={masterpieceBook}
+                            despisedBook={despisedBook}
+                            book={book} />
+                        {/* <button onClick={() => { saveBook(book) }}>save</button> */}
                     </section>
                 }
             )

@@ -15,6 +15,9 @@ export const CommentForm = () => {
         event.preventDefault()
 
         const commentToSendToAPI = {
+            despisedBookId: bookId,
+            masterpieceBookId: bookId,
+            completedBookId: bookId,
             savedBookId: bookId,
             userId: bookUserObject.id,
             content: comment.content
@@ -29,7 +32,7 @@ export const CommentForm = () => {
         })
             .then(response => response.json())
             .then(() => {
-                navigate("/WantToRead")
+                navigate("/")
             })
     }
 
